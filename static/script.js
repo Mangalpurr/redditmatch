@@ -24,7 +24,6 @@ const questions = [
     { q: "What’s your favorite type of TV show?", options: ["Sitcoms", "Reality Shows", "Anime", "Drama", "Crime/Thriller", "Sci-Fi/Fantasy", "Horror", "Action"] }
 ];
 
-
 function startQuiz() {
     document.getElementById("form-container").classList.add("hidden");
     document.getElementById("quiz-container").classList.remove("hidden");
@@ -36,11 +35,11 @@ function loadQuestion() {
         saveUserData();
         return;
     }
-
+    
     document.getElementById("question").innerText = questions[currentQuestion].q;
     const optionsDiv = document.getElementById("options");
-    optionsDiv.innerHTML = ""; // Clear previous options
-
+    optionsDiv.innerHTML = "";
+    
     questions[currentQuestion].options.forEach(option => {
         const btn = document.createElement("button");
         btn.classList.add("btn", "option-btn");
@@ -49,16 +48,9 @@ function loadQuestion() {
         optionsDiv.appendChild(btn);
     });
 
-    // Remove any existing "Next" button before adding a new one
-    const existingNextButton = document.querySelector(".next-btn");
-    if (existingNextButton) {
-        existingNextButton.remove();
-    }
-
     const nextBtn = document.createElement("button");
     nextBtn.innerText = "Next";
     nextBtn.classList.add("btn", "next-btn");
-    nextBtn.style.marginTop = "15px"; // Add spacing before next button
     nextBtn.onclick = nextQuestion;
     optionsDiv.appendChild(nextBtn);
 }
@@ -84,7 +76,7 @@ function toggleSelection(option) {
 
 function nextQuestion() {
     if (!userResponses[questions[currentQuestion].q] || userResponses[questions[currentQuestion].q].length === 0) {
-        alert("Please select at least one option before proceeding!");
+        alert("Please select at least one option.");
         return;
     }
 
@@ -92,11 +84,10 @@ function nextQuestion() {
     loadQuestion();
 }
 
-
 function saveUserData() {
     const username = document.getElementById("username").value.trim();
     if (!username) {
-        alert("Please enter a username before proceeding!");
+        alert("Username required!");
         return;
     }
 
@@ -107,10 +98,9 @@ function saveUserData() {
     findMatches(userData);
 }
 
-
 function findMatches(userData) {
     document.getElementById("quiz-container").classList.add("hidden");
-    document.getElementById("match-container").classList.remove("hidden"); // Ensure match container is displayed
+    document.getElementById("match-container").classList.remove("hidden");
 
     const storedData = JSON.parse(localStorage.getItem("users")) || [];
     let matches = storedData.filter(user => user.username !== userData.username);
@@ -132,13 +122,8 @@ function findMatches(userData) {
 
 function displayMatches(matches) {
     const matchList = document.getElementById("match-list");
-    matchList.innerHTML = ""; // Clear previous matches
-
-    if (matches.length === 0) {
-        matchList.innerHTML = "<p>No matches found YET!. Try again in some time.</p>";
-        return;
-    }
-
+    matchList.innerHTML = matches.length === 0 ? "<p>No matches found.</p>" : "";
+    
     matches.forEach(match => {
         const div = document.createElement("div");
         div.classList.add("match-card");
@@ -150,4 +135,3 @@ function displayMatches(matches) {
         matchList.appendChild(div);
     });
 }
-

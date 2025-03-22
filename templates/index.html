@@ -10,7 +10,7 @@
 
     <div class="container">
         <h1 class="title">🔍 Find Your Reddit Match</h1>
-
+        
         <div id="form-container">
             <input type="text" id="username" placeholder="Enter Reddit Username">
             <input type="password" id="passkey" placeholder="Set a Passkey (Optional)">
@@ -28,26 +28,8 @@
             <h2>Your Matches</h2>
             <div id="match-list"></div>
         </div>
-
-        <!-- ✅ New "Find Matches" Button -->
-        <div id="find-matches-container">
-            <button class="btn" onclick="findMatches()">🔗 Find My Matches</button>
-        </div>
-
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-
-    <script>
-        function findMatches() {
-            const username = document.getElementById("username").value.trim();
-            if (!username) {
-                alert("⚠️ Please enter your username first!");
-                return;
-            }
-            window.location.href = `/match/${username}`; // Redirects to match page
-        }
-    </script>
-
 </body>
 </html>
